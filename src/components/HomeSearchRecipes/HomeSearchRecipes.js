@@ -5,17 +5,23 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-// import {useParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export default function HomeSearchRecipes() {
     const [searched,setSearched] = useState([]);
+    const navigate = useNavigate();
     const onChangeSearchInput = (event)=>{
         searchOurRecipe(event.target.value)
         .then(res=>setSearched(res.data.results));
     }
+    const getRecipeInformation = (id)=>{
+      navigate(`/recipe-information/${id}`)
+    }
   return (
     <div>
-        <input style={{width:'80%',marginTop:'15px',marginLeft:'10px',height:'40px'}} onChange={onChangeSearchInput} type='search' placeholder='Search here'/>
+      <Container className='mt-5'>
+        <input style={{width:'80%',marginTop:'15px',height:'40px'}} onChange={onChangeSearchInput} type='search' placeholder='Search Recipes here'/>
+      </Container>
         <div>
         <Container>
       <Row>
@@ -31,7 +37,7 @@ export default function HomeSearchRecipes() {
                         <Card.Text className='text text-dark'>
                             Summary: {each.summary}
                         </Card.Text>
-                        <Button variant="dark">Know More</Button>
+                        <Button variant="dark" onClick={()=>getRecipeInformation(each.id)}>Know More</Button>
                     </Card.Body>
                 </Card>
             </Col>

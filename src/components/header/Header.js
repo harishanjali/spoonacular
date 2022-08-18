@@ -9,7 +9,7 @@ import './index.css'
 
 export default function Header(){
     return(
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand href="">Spoonacular</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -17,6 +17,7 @@ export default function Header(){
             <Nav className="ms-auto">
               <Link className='me-2 link' to='/'>Home</Link>
               <Link className='me-2 link' to='/search'>Search</Link>
+              <Link className='me-2 link' to='/cuisine'>Cuisines</Link>
             </Nav>
             
           </Navbar.Collapse>
