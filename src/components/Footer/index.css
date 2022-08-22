@@ -1,0 +1,18 @@
+.footer{
+    /* background-color: #540D10; */
+    /* margin-top:67px; */
+    padding-top:50px;
+    padding-bottom: 50px;
+    color:#fff;
+}
+.icons-container i{
+    color: #fff;
+    font-size: 24px;
+}
+
+.footer-icon{
+    transition:.4s all;
+}
+.footer-icon:hover{
+    transform:translateY(-10px);
+}
