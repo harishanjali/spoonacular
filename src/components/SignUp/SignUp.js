@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
     const [state,setState] = useState({username:'',firstname:'',lastname:'',email:''});
+    const apiKey = process.env.REACT_APP_API_KEY
     const navigate = useNavigate();
     const onChangeHandler = (e)=>{
         let name = e.target.name;
@@ -53,7 +54,7 @@ export default function SignUp() {
     const onSubmitForm = (e)=>{
         e.preventDefault();
         let json = JSON.stringify(state);
-        const response = axios.post('https://api.spoonacular.com/users/connect?apiKey=dedff24430334863a5b7ee4319460a34',json,{
+        const response = axios.post(`https://api.spoonacular.com/users/connect?apiKey=${apiKey}`,json,{
             headers:{
                 'Content-Type':'application/json'
             }

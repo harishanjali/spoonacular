@@ -8,9 +8,10 @@ import axios from 'axios';
 import './index.css'
 
 export default function AddToMeal() {
-    const [state,setState] = useState({mealCalendar:'',mealItem:'',amount:1,getMealCalendar:'',userName:'',myHash:'',statusCode:200,timeSlot:1});
+    const [state,setState] = useState({mealCalendar:'',mealItem:'',amount:1,getMealCalendar:'',clearMealCalendar:'',userName:'',myHash:'',statusCode:200,timeSlot:1});
     const [ingredients,setIngredients] = useState([]);
     const {userName,myHash,statusCode} = state;
+    const apiKey = process.env.REACT_APP_API_KEY
     useEffect(()=>{
         let localStorageData = JSON.parse(localStorage.getItem('usersData'));
         localStorageData.map(each=>{
@@ -45,7 +46,7 @@ export default function AddToMeal() {
             }
         }
         let json = JSON.stringify(data)
-        let response = axios.post(`https://api.spoonacular.com/mealplanner/${userName}/items?apiKey=dedff24430334863a5b7ee4319460a34&hash=${myHash}`,json,{
+        let response = axios.post(`https://api.spoonacular.com/mealplanner/${userName}/items?apiKey=${apiKey}&hash=${myHash}`,json,{
             headers:{
                 'Content-Type':'application/json'
             }
@@ -57,12 +58,12 @@ export default function AddToMeal() {
     }
     const getMeal = ()=>{
         const {getMealCalendar} = state
-        let response = axios.get(`https://api.spoonacular.com/mealplanner/${userName}/day/${getMealCalendar}?hash=${myHash}&apiKey=dedff24430334863a5b7ee4319460a34`)
+        let response = axios.get(`https://api.spoonacular.com/mealplanner/${userName}/day/${getMealCalendar}?hash=${myHash}&apiKey=${apiKey}`)
         response.then(res=>setIngredients(res.data))
         .catch(e=>setState({...state,statusCode:e.response.status}))
     }
     const onDeleteItem = (id)=>{
-        let response = axios.delete(`https://api.spoonacular.com/mealplanner/${userName}/items/${id}?hash=${myHash}&apiKey=dedff24430334863a5b7ee4319460a34`,{
+        let response = axios.delete(`https://api.spoonacular.com/mealplanner/${userName}/items/${id}?hash=${myHash}&apiKey=${apiKey}`,{
             headers:{
                 'Content-Type':'application/json'
             }
@@ -73,13 +74,25 @@ export default function AddToMeal() {
             getMeal();
         })
     }
+    const clearMeal = ()=>{
+        const {clearMealCalendar} = state
+        let response = axios.delete(`https://api.spoonacular.com/mealplanner/${userName}/day/${clearMealCalendar}?hash=${myHash}&apiKey=${apiKey}`,{
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        response.then(res=>{
+            alert(`Meal plan Cleared on the date of: ${clearMealCalendar}`)
+            console.log(res.data);
+        })
+    }
   return (
     <Container>
         <Row>
             <Col md={6}>
             <Form>
                 <h1>Add Meal</h1>
-                <Form.Label>Select time Time slot</Form.Label>
+                <Form.Label>Select Time slot</Form.Label>
                 <Form.Select onChange={onChangeHandler} aria-label="Default select example" name='timeSlot'>
                     <option disabled>Choose Food Time</option>
                     <option value="1">Breakfast</option>
@@ -93,6 +106,12 @@ export default function AddToMeal() {
                     <Form.Control onChange={onChangeHandler} type ='text' placeholder="Type Recipe" name="mealItem"/>
                     <Form.Control className='mt-2 btn btn-dark' type ='button' onClick={addMeal} value='Add meal'/>
 
+                </Form.Group>
+                <h1>Clear Meal Plan Day</h1>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Date:</Form.Label>
+                    <Form.Control onChange={onChangeHandler} type="date" placeholder="Enter Date" name="clearMealCalendar"/>
+                    <Form.Control className='mt-2 btn btn-dark' type ='button' onClick={clearMeal} value='Clear Meal Plan Day'/>
                 </Form.Group>
                 <h1>Get Meal</h1>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

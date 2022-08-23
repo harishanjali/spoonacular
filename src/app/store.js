@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import dataReducer from './reducers/reducer'
+import cakeReducer from './reducers/reducer'
+// import icecreamReducer from '../features/icecream/icecreamSlice'
+// import userReducer from '../features/user/userSlice'
+
 const store = configureStore({
   reducer: {
-    cake: dataReducer
+    cake: cakeReducer
   }
 })
 

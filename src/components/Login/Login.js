@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux/es/exports';
-import {localStorageInfo} from '../../app/reducers/reducer'
+import { updateLoginStatus } from '../../app/reducers/reducer';
 
 export default function Login() {
     const [state,setState] = useState({username:'',email:''});
@@ -36,6 +36,9 @@ export default function Login() {
         
         return result;
       }
+      const navigateToSignUp = ()=>{
+        navigate('/signup')
+      }
     const onSubmitForm = (e)=>{
         e.preventDefault();
         let userCheck = isThereUser(state)
@@ -50,7 +53,7 @@ export default function Login() {
                 }
             })
             localStorage.setItem('usersData',JSON.stringify(arr));
-            dispatch(localStorageInfo(arr))
+            dispatch(updateLoginStatus(true));
             alert('user registered')
             navigate('/');
         }
@@ -66,18 +69,24 @@ export default function Login() {
       </Col>
         <Col md={6}>
         <Form onSubmit={onSubmitForm}>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-  <Form.Label>Username</Form.Label>
-    <Form.Control onChange={onChangeHandler} type="text" placeholder="Enter username" name='username'/>
-    <Form.Label>Email address</Form.Label>
-    <Form.Control onChange={onChangeHandler} type="email" placeholder="Enter email" name='email'/>
-    <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text>
-  </Form.Group>
-  <Button variant="primary" type="submit">
-    Submit
-  </Button>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Username</Form.Label>
+            <Form.Control onChange={onChangeHandler} type="text" placeholder="Enter username" name='username'/>
+            <Form.Label>Email address</Form.Label>
+            <Form.Control onChange={onChangeHandler} type="email" placeholder="Enter email" name='email'/>
+            <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+            </Form.Text>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+        <Form.Group className='mt-3'>
+          <Form.Text className="text-dark fw-bold">
+              Don't have an Account ? Create one by Signing up....
+          </Form.Text>
+          <Form.Control onClick={navigateToSignUp} className='btn btn-dark mt-2' type='button' value='SignUp'/>
+        </Form.Group>
         </Form>
         </Col>
     </Row>

@@ -6,26 +6,20 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useSelector, useDispatch } from 'react-redux'
+import {updateLoginStatus} from '../../app/reducers/reducer'
 import './index.css'
 
 export default function Header(){
-  const [isLoggedIn,setLoggedIn] = useState(false);
+  // const [isLoggedIn,setLoggedIn] = useState(false);
+  // console.log(apiKey)
+  const isLoggedIn = useSelector(state=>state.cake.data);
+  const dispatch = useDispatch()
+  // console.log(updateLoginStatus);
   const navigate = useNavigate()
-  useEffect(()=>{
-    let localStorageData = JSON.parse(localStorage.getItem('usersData'));
-    if(localStorageData!==null){
-      localStorageData.map(each=>{
-        if(each.isLoggedIn){
-            setLoggedIn(true)
-        }
-    })
-    }
-    
-  },[])
   const addMeal = ()=>{
     if(!isLoggedIn){
-      alert('User not loged In');
+      alert('User not logged In');
     }
   }
   const doLogout = ()=>{
@@ -35,6 +29,7 @@ export default function Header(){
         each.isLoggedIn = false;
     })
     localStorage.setItem('usersData',JSON.stringify(arr));
+    dispatch(updateLoginStatus(false))
     navigate('/login');
   }
     return(
@@ -47,8 +42,8 @@ export default function Header(){
               <Link className='me-2 link' to='/'>Home</Link>
               <Link className='me-2 link' to='/search'>Search</Link>
               <Link className='me-2 link' to='/cuisine'>Cuisines</Link>
-              <Link onClick={addMeal} className='me-2 link' to='/add-to-meal'>AddMealPlan</Link>
-              {isLoggedIn&&<Link onClick={doLogout} className='me-2 link' to='/login'>LouOut</Link>}
+              <Link onClick={addMeal} className='me-2 link' to={isLoggedIn?'/add-to-meal':'/login'}>AddMealPlan</Link>
+              {isLoggedIn&& <Button variant="danger" onClick={doLogout}>LogOut</Button>}
               {!isLoggedIn&&<Link className='me-2 link' to='/signup'>Sign Up</Link>}
               {!isLoggedIn&&<Link className='me-2 link' to='/login'>Login</Link>}
             </Nav>

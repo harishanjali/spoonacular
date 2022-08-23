@@ -1,19 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+let myData = JSON.parse(localStorage.getItem('usersData'));
+let specialCase=false;
+if(myData!==null){
+  myData.map(each=>{
+    if(each.isLoggedIn){
+      specialCase = true;
+    }
+  })
+}
 const initialState = {
-  data:JSON.parse(localStorage.getItem('userData'))
+  numOfCakes: 20,
+  data:specialCase
 }
 
-const dataSlice = createSlice({
+const cakeSlice = createSlice({
   name: 'cake',
   initialState,
   reducers: {
-    localStorageInfo: (state,action) => {
-      state.data = action.payload
-    //   console.log(state.data);
+    ordered: state => {
+      state.numOfCakes--
+    },
+    restocked: (state, action) => {
+      state.numOfCakes += action.payload
+    },
+    updateLoginStatus:(state,action)=>{
+        state.data = action.payload
     }
   }
 })
 
-export default dataSlice.reducer
-export const { localStorageInfo} = dataSlice.actions
+export default cakeSlice.reducer
+export const { ordered, restocked,updateLoginStatus } = cakeSlice.actions

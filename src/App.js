@@ -9,20 +9,11 @@ import Footer from './components/Footer/index';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
 import AddToMeal from './components/addMealPlanner/AddToMeal';
+import { useSelector, useDispatch } from 'react-redux'
 import './App.css';
 
 function App() {
-  const [isLoggedIn,setLoggedIn] = useState(false);
-  useEffect(()=>{
-    let localStorageData = JSON.parse(localStorage.getItem('usersData'));
-    if(localStorageData!==null){
-      localStorageData.map(each=>{
-        if(each.isLoggedIn){
-            setLoggedIn(true)
-        }
-      })
-    }
-    },[]);
+  const isLoggedIn = useSelector(state=>state.cake.data);
   return (
     <Router>
       <Header/>
@@ -33,7 +24,7 @@ function App() {
         <Route path='/cuisine' element={<Cuisine/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/add-to-meal' element={isLoggedIn?<AddToMeal/>:<Login/>}/>
+        <Route path='/add-to-meal' element={<AddToMeal/>}/>
       </Routes>
       {/* <Footer/> */}
     </Router>

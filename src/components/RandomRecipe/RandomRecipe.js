@@ -6,9 +6,13 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { ordered, restocked } from '../../app/reducers/reducer'
 import './index.css'
 
 export default function RandomRecipe() {
+    const numOfCakes = useSelector(state => state.cake.numOfCakes)
+    const dispatch = useDispatch()
     const [randomRecipes,setRandomRecipe] = useState([]);
     const [joke,setJoke] = useState('');
     const navigate = useNavigate()
@@ -26,6 +30,11 @@ export default function RandomRecipe() {
   return (
     <Container className='mt-5 pb-5'>
       <Row>
+        {/* <Col md={6}>
+        <h2>Number of cakes - {numOfCakes}</h2>
+        <button onClick={() => dispatch(ordered())}>Order Cake</button>
+        <button onClick={() => dispatch(restocked(5))}>Restock Cakes</button>
+        </Col> */}
         <Col md={12}>
             <h1 className='mb-2 mt-4'>Look Out Some Recipes Here</h1>
         </Col>
