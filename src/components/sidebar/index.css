@@ -1,0 +1,15 @@
+.side-bar{
+    height:100vh;
+    background-color: grey;
+    top:56px;
+    position: fixed;
+    width:20%;
+}
+.link-beverage{
+    color:white;
+    text-decoration: none;
+    display:block;
+}
+.link-beverage:hover{
+    color:goldenrod;
+}

@@ -70,7 +70,7 @@ export default function SignUp() {
         .catch(e=>console.log(e))
     }
   return (
-    <Container className='mt-3'>
+    <Container className='mt-5 pt-5'>
         <Row>
         <Col md={12}>
         <h1>Sign Up</h1>
@@ -93,7 +93,7 @@ export default function SignUp() {
       <Button variant="primary" type="submit">
         Submit
       </Button>
-    </Form>
+            </Form>
             </Col>
         </Row>
     </Container>

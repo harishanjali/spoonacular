@@ -1,5 +1,5 @@
 import axios from "axios";
-import {randomRecipe,searchRecipe,recipiInfo,cuisineApi,jokeApi,ingredientById} from "./URL";
+import {randomRecipe,searchRecipe,recipiInfo,cuisineApi,jokeApi,ingredientById,searchAllFood} from "./URL";
 const apiKey = process.env.REACT_APP_API_KEY
 
 function getRandomRecipe(){
@@ -33,4 +33,9 @@ function getIngredientsForRecipe(id){
         axios.get(`${ingredientById}/${id}/ingredientWidget.json?apiKey=${apiKey}`)
     )
 }
-export {getRandomRecipe,searchOurRecipe,getRecipeInfo,getCuisine,getRandomJoke,getIngredientsForRecipe};
+function getAllFood(query){
+    return(
+        axios.get(`${searchAllFood}&query=${query}&number=4&apiKey=${apiKey}`)
+    )
+}
+export {getAllFood,getRandomRecipe,searchOurRecipe,getRecipeInfo,getCuisine,getRandomJoke,getIngredientsForRecipe};

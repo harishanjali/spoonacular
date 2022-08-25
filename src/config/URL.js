@@ -5,5 +5,6 @@ const searchRecipe = `https://api.spoonacular.com/recipes/complexSearch?apiKey=$
 const recipiInfo = `https://api.spoonacular.com/recipes`
 const cuisineApi = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}`;
 const jokeApi = `https://api.spoonacular.com/food/jokes/random?apiKey=${apiKey}`
-const ingredientById = `https://api.spoonacular.com/recipes`
-export {randomRecipe,searchRecipe,recipiInfo,cuisineApi,jokeApi,ingredientById};
+const ingredientById = `https://api.spoonacular.com/recipes`;
+const searchAllFood = `https://api.spoonacular.com/food/search?`
+export {randomRecipe,searchRecipe,recipiInfo,cuisineApi,jokeApi,ingredientById,searchAllFood};

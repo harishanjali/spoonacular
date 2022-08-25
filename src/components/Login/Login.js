@@ -62,7 +62,7 @@ export default function Login() {
         }
     }
   return (
-    <Container className='mt-2'>
+    <Container className='mt-5 pt-5'>
     <Row>
       <Col md={12}>
         <h1>Login</h1>

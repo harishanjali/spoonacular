@@ -33,7 +33,7 @@ export default function Header(){
     navigate('/login');
   }
     return(
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed='top'>
         <Container>
           <Navbar.Brand href="">Spoonacular</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -42,7 +42,8 @@ export default function Header(){
               <Link className='me-2 link' to='/'>Home</Link>
               <Link className='me-2 link' to='/search'>Search</Link>
               <Link className='me-2 link' to='/cuisine'>Cuisines</Link>
-              <Link onClick={addMeal} className='me-2 link' to={isLoggedIn?'/add-to-meal':'/login'}>AddMealPlan</Link>
+              <Link className='me-2 link' to='/beverages'>Wine</Link>
+              <Link onClick={addMeal} className='me-2 link' to={isLoggedIn?'/add-to-meal':'/login'}>MealPlanner</Link>
               {isLoggedIn&& <Button variant="danger" onClick={doLogout}>LogOut</Button>}
               {!isLoggedIn&&<Link className='me-2 link' to='/signup'>Sign Up</Link>}
               {!isLoggedIn&&<Link className='me-2 link' to='/login'>Login</Link>}
