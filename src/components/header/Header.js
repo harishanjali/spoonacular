@@ -8,6 +8,8 @@ import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {updateLoginStatus} from '../../app/reducers/reducer'
+import { signOut } from "firebase/auth";
+import {auth} from '../../firebase';
 import './index.css'
 
 export default function Header(){
@@ -23,13 +25,10 @@ export default function Header(){
     }
   }
   const doLogout = ()=>{
-    console.log('logout triggered');
-    let arr = JSON.parse(localStorage.getItem('usersData'));
-    arr.map(each=>{
-        each.isLoggedIn = false;
-    })
-    localStorage.setItem('usersData',JSON.stringify(arr));
-    dispatch(updateLoginStatus(false))
+    signOut(auth)
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+    dispatch(updateLoginStatus(false));
     navigate('/login');
   }
     return(

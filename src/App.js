@@ -19,9 +19,20 @@ import ClearMeal from './components/MealPlanner/ClearMeal';
 import GetMealWeek from './components/MealPlanner/GetMealWeek';
 import './App.css';
 import DishPairWine from './components/dishPairWine/DishPairWine';
+import {updateLoginStatus} from './app/reducers/reducer'
+// import { useDispatch } from 'react-redux/es/exports';
 
 function App() {
-  const isLoggedIn = useSelector(state=>state.cake.data);
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    const token = (localStorage.getItem('token'));
+    if(token!==null){
+      dispatch(updateLoginStatus(true))
+    }
+    else{
+      dispatch(updateLoginStatus(false))
+    }
+  },[])
   return (
     <Router>
       <Header/>

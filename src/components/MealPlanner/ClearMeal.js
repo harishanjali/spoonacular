@@ -36,14 +36,10 @@ export default function ClearMeal() {
     const {userName,myHash,statusCode} = state;
     const apiKey = process.env.REACT_APP_API_KEY
     useEffect(()=>{
-        let localStorageData = JSON.parse(localStorage.getItem('usersData'));
-        localStorageData.map(each=>{
-            if(each.isLoggedIn){
-                // userName = each.spoonacularUsername;
-                // myHash = each.hash;
-                setState({...state,userName:each.spoonacularUsername,myHash:each.hash})
-            }
-        })
+        let localStorageData = JSON.parse(localStorage.getItem('userData'));
+        const {hash,spoonacularUsername} = localStorageData[0];
+        // console.log(localStorageData);
+        setState({...state,myHash:hash,userName:spoonacularUsername})
     },[])
     const onChangeHandler = (e)=>{
         let name = e.target.name;

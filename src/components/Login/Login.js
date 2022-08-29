@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/esm/Container';
@@ -7,60 +7,59 @@ import Col from 'react-bootstrap/esm/Col';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux/es/exports';
 import { updateLoginStatus } from '../../app/reducers/reducer';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from '../../firebase'
+import {app,database} from '../../config/firebaseConfig'
+import {collection,getDocs} from 'firebase/firestore'
 
 export default function Login() {
-    const [state,setState] = useState({username:'',email:''});
+    const [state,setState] = useState({password:'',email:''});
+    const [users,setUsers] = useState([]);
     const navigate = useNavigate();
     const dispatch =useDispatch();
+    const collectionRef = collection(database,'users');
+    let data = []
+    useEffect(()=>{
+      getAllUsers()
+    },[])
+    // console.log(data);
+    const {email,password} = state;
+    const getAllUsers =()=>{
+      let data =[]
+      getDocs(collectionRef)
+      .then(res=>res.docs.map(item=>{
+          data.push(item.data())
+      }))
+      setUsers(data);
+    }
     const onChangeHandler = (e)=>{
         let name = e.target.name;
         setState({...state,[name]:e.target.value})
     }
-    function isThereUser(item){
-        let arr=JSON.parse(localStorage.getItem('usersData'));
-        let result;
-        if(arr!==null){
-          for(let items of arr){
-            if(items.email===item.email){
-              result = true;
-              break;
-            }
-            else{
-              result = false;
-            }
-          }
-        }
-        else{
-          result = false;
-        }
-        
-        return result;
-      }
       const navigateToSignUp = ()=>{
         navigate('/signup')
       }
-    const onSubmitForm = (e)=>{
+      const handleSubmit = async(e)=>{
         e.preventDefault();
-        let userCheck = isThereUser(state)
-        if(userCheck){
-            let arr=JSON.parse(localStorage.getItem('usersData'));
-            arr.map(each=>{
-                if(each.email===state.email){
-                    each.isLoggedIn = true
-                }
-                else{
-                    each.isLoggedIn = false
-                }
-            })
-            localStorage.setItem('usersData',JSON.stringify(arr));
-            dispatch(updateLoginStatus(true));
-            alert('user registered')
-            navigate('/');
+        // console.log(users);
+        if(!email || !password){
+          alert('fields are empty');
         }
-        else{
-            alert('user not registered');
+        // return;
+        try{
+          const result = await signInWithEmailAndPassword(auth,email,password)
+          alert(`Login Successful ${result.user.email}`)
+          localStorage.setItem('token',result.user.accessToken);
+          const userData = users.filter(each=>(
+            each.email===result.user.email
+          ));
+          localStorage.setItem('userData',JSON.stringify(userData));
+          dispatch(updateLoginStatus(true))
+          navigate('/');
+        }catch(error){
+          alert(error.message)
         }
-    }
+      }
   return (
     <Container className='mt-5 pt-5'>
     <Row>
@@ -68,12 +67,12 @@ export default function Login() {
         <h1>Login</h1>
       </Col>
         <Col md={6}>
-        <Form onSubmit={onSubmitForm}>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Username</Form.Label>
-            <Form.Control onChange={onChangeHandler} type="text" placeholder="Enter username" name='username'/>
             <Form.Label>Email address</Form.Label>
             <Form.Control onChange={onChangeHandler} type="email" placeholder="Enter email" name='email'/>
+            <Form.Label>Password</Form.Label>
+            <Form.Control onChange={onChangeHandler} type="password" placeholder="Enter Password" name='password'/>
             <Form.Text className="text-muted">
             We'll never share your email with anyone else.
             </Form.Text>
