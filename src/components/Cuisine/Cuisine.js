@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form'
 import {useNavigate} from 'react-router-dom';
 
 export default function Cuisine() {
@@ -35,12 +36,12 @@ export default function Cuisine() {
         <Container className='mt-3'>
           <Row>
           {cuisines.map(each=>(
-            <Col xs={12} sm={2} md={3} key={each.id}>
+            <Col xs={12} sm={6} md={4} key={each.id}>
                 <Card style={{height:'auto'}} className='mb-2 position-relative'>
                     <Card.Img variant="top" src={each.image} />
                     <Card.Body>
-                        <Card.Title className='text'>{each.title}</Card.Title>
-                        <Button variant="dark" onClick={()=>getRecipeInformation(each.id)}>Know More</Button>
+                        <Card.Title className='title-text'>{each.title}</Card.Title>
+                        <Form.Control className='btn btn-dark' onClick={()=>getRecipeInformation(each.id)} value='Know More' />
                     </Card.Body>
                 </Card>
             </Col>

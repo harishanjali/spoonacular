@@ -38,7 +38,7 @@ export default function WinePair() {
   const handleSubmit = (e)=>{
     e.preventDefault()
     const {recommendationSearch} = state;
-    console.log(recommendationSearch)
+    // console.log(recommendationSearch)
     const result = axios.get(`https://api.spoonacular.com/food/wine/pairing?food=${recommendationSearch}&apiKey=${process.env.REACT_APP_API_KEY}`)
     result.then(res=>setData(res.data))
   }

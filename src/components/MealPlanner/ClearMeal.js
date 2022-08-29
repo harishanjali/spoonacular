@@ -55,7 +55,7 @@ export default function ClearMeal() {
         })
         response.then(res=>{
             alert(`Meal plan Cleared on the date of: ${clearMealCalendar}`)
-            console.log(res.data);
+            // console.log(res.data);
         })
     }
   return (

@@ -35,7 +35,7 @@ function getIngredientsForRecipe(id){
 }
 function getAllFood(query){
     return(
-        axios.get(`${searchAllFood}&query=${query}&number=4&apiKey=${apiKey}`)
+        axios.get(`${searchAllFood}&query=${query}&number=3&apiKey=${apiKey}`)
     )
 }
 export {getAllFood,getRandomRecipe,searchOurRecipe,getRecipeInfo,getCuisine,getRandomJoke,getIngredientsForRecipe};

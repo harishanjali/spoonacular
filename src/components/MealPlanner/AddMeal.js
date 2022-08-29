@@ -72,7 +72,7 @@ export default function AddMeal() {
         })
         response.then(res=>{
             alert('Added the Recipe')
-            console.log(res.data);
+            // console.log(res.data);
         });
     }
   return (

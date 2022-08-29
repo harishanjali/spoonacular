@@ -13,7 +13,7 @@ import {app,database} from '../../config/firebaseConfig'
 import {collection,getDocs} from 'firebase/firestore'
 
 export default function Login() {
-    const [state,setState] = useState({password:'',email:''});
+    const [state,setState] = useState({password:'',email:'',err:''});
     const [users,setUsers] = useState([]);
     const navigate = useNavigate();
     const dispatch =useDispatch();
@@ -23,7 +23,7 @@ export default function Login() {
       getAllUsers()
     },[])
     // console.log(data);
-    const {email,password} = state;
+    const {email,password,err} = state;
     const getAllUsers =()=>{
       let data =[]
       getDocs(collectionRef)
@@ -48,6 +48,7 @@ export default function Login() {
         // return;
         try{
           const result = await signInWithEmailAndPassword(auth,email,password)
+          setState({...state,err:''});
           alert(`Login Successful ${result.user.email}`)
           localStorage.setItem('token',result.user.accessToken);
           const userData = users.filter(each=>(
@@ -57,7 +58,12 @@ export default function Login() {
           dispatch(updateLoginStatus(true))
           navigate('/');
         }catch(error){
-          alert(error.message)
+          if(error.message.includes('user-not-found')){
+            setState({...state,err:'User Not Registred'});
+          }
+          if(error.message.includes('password')){
+            setState({...state,err:'Invalid Crendentials'});
+          }
         }
       }
   return (
@@ -76,6 +82,7 @@ export default function Login() {
             <Form.Text className="text-muted">
             We'll never share your email with anyone else.
             </Form.Text>
+            <Form.Text className='text-danger d-block'>{err}</Form.Text>
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
