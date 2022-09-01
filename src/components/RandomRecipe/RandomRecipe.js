@@ -61,13 +61,13 @@ export default function RandomRecipe() {
                 <h4>{each.name}</h4>
                 <Row>
                     {each.results.map(each=>(
-                        <Col md={4} sm={6} xs={12}>
-                            <Card style={{height:'auto'}} className='mb-2 position-relative'>
+                        <Col md={4} sm={6} xs={12} className='mb-4'>
+                            <Card style={{height:'auto'}} className='mb-2 position-relative card'>
                                 <Card.Img variant="top" style={{height:'180px'}} src={each.image} alt='searched-item'/>
                                 <Card.Body>
                                     <Card.Title className='title-text'>{each.name}</Card.Title>
                                 </Card.Body>
-                                <a className='btn btn-dark' href={each.link} target='_blank'>Know more</a>
+                                <a className='btn btn-outline-dark m-3 text-center know-more-btn' href={each.link} target='_blank'>Know more</a>
                             </Card>
                         </Col>
                     ))}
@@ -76,11 +76,11 @@ export default function RandomRecipe() {
             </Col>
         ))}
         <Col md={12}>
-            <h1 className='mb-2 mt-4'>Look Out Some Recipes Here</h1>
+            <h1 className='mb-5 mt-4'>Look Out Some Recipes Here</h1>
         </Col>
         {randomRecipes.map(each=>(
-            <Col xs={12} sm={6} md={4} key={each.id}>
-                <Card className='mb-2 position-relative'>
+            <Col xs={12} sm={6} md={4} key={each.id} className='mb-4'>
+                <Card className='mb-2 position-relative' onClick={()=>getRecipeInformation(each.id)}>
                     <Card.Img variant="top" src={each.image} alt='random-recipe'/>
                     <Card.Body>
                         <Card.Title className='title-text'>{each.title}</Card.Title>
@@ -90,7 +90,7 @@ export default function RandomRecipe() {
                         <Card.Text className='text text-dark'>
                             Summary: {each.summary}
                         </Card.Text>
-                        <Form.Control className='btn btn-dark' onClick={()=>getRecipeInformation(each.id)} value='Know More'/>
+                        <Form.Control className='text-center know-more-btn' onClick={()=>getRecipeInformation(each.id)} value='Know More'/>
                     </Card.Body>
                 </Card>
             </Col>

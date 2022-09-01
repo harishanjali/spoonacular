@@ -67,10 +67,10 @@ export default function SignUp() {
       }
     }
   return (
-    <Container className='mt-5 pt-5'>
-        <Row>
+    <Container className='mt-5 pt-5 pb-5'>
+        <Row className='d-flex justify-content-center align-items-center'>
         <Col md={12}>
-        <h1>Sign Up</h1>
+        <h1 className='text-center'>Sign Up</h1>
       </Col>
             <Col md={6}>
             <Form onSubmit={handleSubmit}>

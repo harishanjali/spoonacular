@@ -5,8 +5,14 @@
 }
 .link:hover{
     color:goldenrod;
+    border-bottom: 1px solid goldenrod;
 }
 .logout{
     margin-top:0;
     padding-top:0;
+}
+@media only screen and (min-width:320px) and (max-width:991px){
+    .link{
+        margin-bottom: 20px !important;
+    }
 }

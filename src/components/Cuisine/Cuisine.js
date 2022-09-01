@@ -36,12 +36,12 @@ export default function Cuisine() {
         <Container className='mt-3'>
           <Row>
           {cuisines.map(each=>(
-            <Col xs={12} sm={6} md={4} key={each.id}>
-                <Card style={{height:'auto'}} className='mb-2 position-relative'>
+            <Col xs={12} sm={6} md={4} key={each.id} className='mb-4'>
+                <Card onClick={()=>getRecipeInformation(each.id)} style={{height:'auto'}} className='mb-2 position-relative'>
                     <Card.Img variant="top" src={each.image} />
                     <Card.Body>
                         <Card.Title className='title-text'>{each.title}</Card.Title>
-                        <Form.Control className='btn btn-dark' onClick={()=>getRecipeInformation(each.id)} value='Know More' />
+                        <Form.Control className='know-more-btn text-center' onClick={()=>getRecipeInformation(each.id)} value='Know More' />
                     </Card.Body>
                 </Card>
             </Col>
